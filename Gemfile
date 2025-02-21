@@ -68,3 +68,11 @@ group :test do
 end
 
 gem 'devise'
+
+group :development do
+  gem 'rubocop', require: false
+end
+
+group :production do
+  gem 'pg'
+end
