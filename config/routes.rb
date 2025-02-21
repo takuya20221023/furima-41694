@@ -7,4 +7,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  root "items#index"  # ← トップページのルートを設定（適宜変更）
+  
+  resources :items  
 end
