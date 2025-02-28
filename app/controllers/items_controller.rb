@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
+
     def index
-      @items = Item.all  # データ取得（なくてもOK）
+      @items = Item.all # 商品一覧の取得
     end
+
 end

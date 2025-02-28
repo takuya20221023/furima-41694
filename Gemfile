@@ -77,4 +77,4 @@ group :production do
   gem 'pg'
 end
 
-gem 'devise'
+gem 'rspec-rails', group: [:development, :test]
