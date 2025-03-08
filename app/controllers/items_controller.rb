@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
-    def index
-      @items = Item.all  # データ取得（なくてもOK）
-    end
+  # before_action :authenticate_user!, except: [:index] # indexページだけログイン不要
+
+  def index
+    # @items = Item.all # 商品一覧の取得
+  end
 end
