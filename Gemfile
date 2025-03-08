@@ -80,4 +80,6 @@ end
 gem 'rspec-rails', group: [:development, :test]
 group :test do
   gem 'factory_bot_rails'
+  gem 'faker'
 end
+
