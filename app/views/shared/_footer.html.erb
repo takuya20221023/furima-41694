@@ -7,8 +7,8 @@
     今すぐ無料ダウンロード！
   </h2>
   <div class='store-btn'>
-    <%= link_to image_tag("app-store.svg", class:"apple-btn"), "#" %>
-    <%= link_to image_tag("google-play.png", class:"google-btn"), "#" %>
+    <%= link_to image_tag("app-store.svg", class:"apple-btn"), "#", aria: { label: "App Store" } %>
+    <%= link_to image_tag("google-play.png", class:"google-btn"), "#", aria: { label: "Google Play" } %>
   </div>
 </div>
 <%# /下部広告部分 %>
@@ -18,28 +18,28 @@
     <div class='furima-details'>
       <h2 class='footer-content-head'>FURIMAについて</h2>
       <ul>
-        <li><%= link_to '会社概要（運営会社)', "#", class: "footer-link" %></li>
-        <li><%= link_to 'プライバシーポリシー', "#", class: "footer-link" %></li>
-        <li><%= link_to 'FURIMA利用規約', "#", class: "footer-link" %></li>
-        <li><%= link_to 'ポイントに関する特約', "#", class: "footer-link" %></li>
+        <li><%= link_to '会社概要（運営会社)', "#", class: "footer-link", aria: { label: "会社概要" } %></li>
+        <li><%= link_to 'プライバシーポリシー', "#", class: "footer-link", aria: { label: "プライバシーポリシー" } %></li>
+        <li><%= link_to 'FURIMA利用規約', "#", class: "footer-link", aria: { label: "FURIMA利用規約" } %></li>
+        <li><%= link_to 'ポイントに関する特約', "#", class: "footer-link", aria: { label: "ポイントに関する特約" } %></li>
       </ul>
     </div>
     <div class='furima-details'>
       <h2 class='footer-content-head'>FURIMAを見る</h2>
       <ul>
-        <li><%= link_to 'カテゴリー一覧', "#", class: "footer-link" %></li>
-        <li><%= link_to 'ブランド一覧', "#", class: "footer-link" %></li>
+        <li><%= link_to 'カテゴリー一覧', "#", class: "footer-link", aria: { label: "カテゴリー一覧" } %></li>
+        <li><%= link_to 'ブランド一覧', "#", class: "footer-link", aria: { label: "ブランド一覧" } %></li>
       </ul>
     </div>
     <div class='furima-details'>
       <h2 class='footer-content-head'>FURIMAについて</h2>
       <ul>
-        <li><%= link_to 'FURIMAガイド', "#", class: "footer-link" %></li>
-        <li><%= link_to 'FURIMAロゴ利用ガイドライン', "#", class: "footer-link" %></li>
-        <li><%= link_to 'お知らせ', "#", class: "footer-link" %></li>
+        <li><%= link_to 'FURIMAガイド', "#", class: "footer-link", aria: { label: "FURIMAガイド" } %></li>
+        <li><%= link_to 'FURIMAロゴ利用ガイドライン', "#", class: "footer-link", aria: { label: "FURIMAロゴ利用ガイドライン" } %></li>
+        <li><%= link_to 'お知らせ', "#", class: "footer-link", aria: { label: "お知らせ" } %></li>
       </ul>
     </div>
   </div>
-  <%= link_to image_tag("furima-logo-white.png", class:"logo-white"), "#" %>
+  <%= link_to image_tag("furima-logo-white.png", class:"logo-white"), "#", aria: { label: "Furima Logo" } %>
   <p>© FURIMA</p>
 </div>

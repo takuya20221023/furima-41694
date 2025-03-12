@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Furima</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,9 +10,20 @@
 </head>
 
 <body>
-  <div class="container"> 
+  <div class="container">
+    <!-- ヘッダー部分 -->
+    <header class="header">
+      <% if user_signed_in? %>
+        <!-- ログインしている場合はログアウトリンクを表示 -->
+<%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete }, class: 'logout-link' %>
+
+        <!-- ログインしていない場合はログインリンクを表示 -->
+        <%= link_to 'ログイン', new_user_session_path, class: 'login-link' %>
+      <% end %>
+    </header>
+
+    <!-- メインコンテンツ -->
     <%= yield %>
   </div>
 </body>
-
 </html>
