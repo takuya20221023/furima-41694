@@ -6,10 +6,18 @@
   <div class="items-sell-main">
     <h2 class="items-sell-title">商品の情報を入力</h2>
 
-<%= form_with model: @item, url: new_item_path do |f| %>
+    <%= form_with model: @item, url: items_path, method: :post, local: true do |f| %>
 
-      <%# エラーメッセージを表示 %>
-      <%= render 'shared/error_messages', model: f.object %>
+      <% if @item.errors.any? %>
+        <div class="error-messages">
+          <h2><%= pluralize(@item.errors.count, "エラー") %>が発生しました。</h2>
+          <ul>
+            <% @item.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
       <%# 商品画像 %>
       <div class="img-upload">
@@ -19,7 +27,7 @@
         </div>
         <div class="click-upload">
           <p>クリックしてファイルをアップロード</p>
-          <%= f.file_field :image, id:"item-image" %>
+          <%= f.file_field :image, id:"item-image", required: true %>
         </div>
       </div>
 
@@ -29,14 +37,14 @@
           商品名
           <span class="indispensable">必須</span>
         </div>
-        <%= f.text_area :name, class:"items-text", id:"item-name", placeholder:"商品名（必須 40文字まで)", maxlength:"40" %>
+        <%= f.text_area :name, class:"items-text", id:"item-name", placeholder:"商品名（必須 40文字まで)", maxlength:"40", required: true %>
         
         <div class="items-explain">
           <div class="weight-bold-text">
             商品の説明
             <span class="indispensable">必須</span>
           </div>
-          <%= f.text_area :description, class:"items-text", id:"item-info", placeholder:"商品の説明（必須 1,000文字まで）", rows:"7", maxlength:"1000" %>
+          <%= f.text_area :description, class:"items-text", id:"item-info", placeholder:"商品の説明（必須 1,000文字まで）", rows:"7", maxlength:"1000", required: true %>
         </div>
       </div>
 
@@ -48,13 +56,13 @@
             カテゴリー
             <span class="indispensable">必須</span>
           </div>
-          <%= f.collection_select :category_id, Category.all, :id, :name, {}, { class: "select-box", id: "item-category" } %>
+          <%= f.collection_select :category_id, Category.all, :id, :name, { prompt: "選択してください" }, { class: "select-box", id: "item-category", required: true } %>
 
           <div class="weight-bold-text">
             商品の状態
             <span class="indispensable">必須</span>
           </div>
-          <%= f.collection_select :condition_id, Condition.all, :id, :name, {}, { class: "select-box", id: "item-sales-status" } %>
+          <%= f.collection_select :condition_id, Condition.all, :id, :name, { prompt: "選択してください" }, { class: "select-box", id: "item-sales-status", required: true } %>
         </div>
       </div>
 
@@ -69,19 +77,19 @@
             配送料の負担
             <span class="indispensable">必須</span>
           </div>
-          <%= f.collection_select :shipping_fee_id, ShippingFee.all, :id, :name, {}, { class: "select-box", id: "item-shipping-fee" } %>
+          <%= f.collection_select :shipping_fee_id, ShippingFee.all, :id, :name, { prompt: "選択してください" }, { class: "select-box", id: "item-shipping-fee", required: true } %>
 
           <div class="weight-bold-text">
             発送元の地域
             <span class="indispensable">必須</span>
           </div>
-          <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, {}, { class: "select-box", id: "item-prefecture" } %>
+          <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, { prompt: "選択してください" }, { class: "select-box", id: "item-prefecture", required: true } %>
 
           <div class="weight-bold-text">
             発送までの日数
             <span class="indispensable">必須</span>
           </div>
-          <%= f.collection_select :shipping_day_id, Shippingday.all, :id, :name, {}, { class: "select-box", id: "item-shipping-day" } %>
+          <%= f.collection_select :shipping_day_id, ShippingDay.all, :id, :name, { prompt: "選択してください" }, { class: "select-box", id: "item-shipping-day", required: true } %>
         </div>
       </div>
 
@@ -98,7 +106,7 @@
               <span class="indispensable">必須</span>
             </div>
             <span class="sell-yen">¥</span>
-            <%= f.number_field :price, class:"price-input", id:"item-price", placeholder:"例）300", min: 300, max: 9999999 %>
+            <%= f.number_field :price, class:"price-input", id:"item-price", placeholder:"例）300", min: 300, max: 9999999, required: true %>
           </div>
           <div class="price-content">
             <span>販売手数料 (10%)</span>
