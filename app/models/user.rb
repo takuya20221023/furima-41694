@@ -16,7 +16,8 @@ class User < ApplicationRecord
   end
 
   # パスワードのバリデーション
-  validates :password, format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+\z/, message: 'は半角英数字を含めてください（記号・全角文字は使用不可）' }, length: { minimum: 8 }
+  validates :password, format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+\z/, message: 'は半角英数字を含めてください（記号・全角文字は使用不可）' },
+                       length: { minimum: 8 }
 
   # 年齢制限（18歳以上）
   validates :birth_date, comparison: { less_than_or_equal_to: 18.years.ago, message: 'は18歳以上でなければなりません' }

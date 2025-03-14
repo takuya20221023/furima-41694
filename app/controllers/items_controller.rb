@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
- #before_action :authenticate_user!, only: [:new, :create]
+  # before_action :authenticate_user!, only: [:new, :create]
 
   def new
     @item = Item.new
@@ -18,6 +18,7 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :description, :category_id, :condition_id, :shipping_fee_id, :prefecture_id, :shipping_day_id, :price, :image)
+    params.require(:item).permit(:name, :description, :category_id, :condition_id, :shipping_fee_id, :prefecture_id,
+                                 :shipping_day_id, :price, :image)
   end
 end
