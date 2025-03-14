@@ -1,13 +1,9 @@
 import { Application } from "@hotwired/stimulus"
-import Rails from '@rails/ujs'
 
 const application = Application.start()
 
-// Stimulusの設定
+// Configure Stimulus development experience
 application.debug = false
-window.Stimulus = application
-
-// rails-ujsの設定
-Rails.start()
+window.Stimulus   = application
 
 export { application }

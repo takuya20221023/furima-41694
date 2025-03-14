@@ -1,4 +1,4 @@
-class User < ApplicationRecord
+class Item < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   # Deviseモジュール
@@ -22,4 +22,24 @@ class User < ApplicationRecord
   # 生年月日について未来の日付や年齢制限を加えたい場合
   validates :birth_date, comparison: { less_than_or_equal_to: Date.today, message: "は未来の日付を選択できません" }
   validates :birth_date, comparison: { greater_than_or_equal_to: 18.years.ago, message: "は18歳以上でなければなりません" }
+
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
+  belongs_to_active_hash :condition
+  belongs_to_active_hash :category
+  belongs_to_active_hash :shipping_fee
+  belongs_to_active_hash :prefecture
+  belongs_to_active_hash :shipping_day
+
+  validates :name, presence: true
+  validates :description, presence: true
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
+  validates :condition_id, presence: true
+  validates :category_id, presence: true
+  validates :shipping_fee_id, presence: true
+  validates :prefecture_id, presence: true
+  validates :shipping_day_id, presence: true
+
+  has_one_attached :image
+
 end
