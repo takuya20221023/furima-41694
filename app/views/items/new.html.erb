@@ -9,7 +9,7 @@
     <%= form_with model: @item, url: items_path, method: :post, local: true do |f| %>
 
       <% if @item.errors.any? %>
-        <div class="error-messages">
+        <div class="error-messages" style="color: red; background-color: #ffcccc; padding: 10px;">
           <h2><%= pluralize(@item.errors.count, "エラー") %>が発生しました。</h2>
           <ul>
             <% @item.errors.full_messages.each do |message| %>
@@ -26,8 +26,8 @@
           <span class="indispensable">必須</span>
         </div>
         <div class="click-upload">
-          <p>クリックしてファイルをアップロード</p>
-          <%= f.file_field :image, id:"item-image", required: true %>
+          <label for="item-image" class="upload-label">クリックしてファイルをアップロード</label>
+          <%= f.file_field :image, id: "item-image", required: true, class: "file-input" %>
         </div>
       </div>
 
@@ -110,11 +110,11 @@
           </div>
           <div class="price-content">
             <span>販売手数料 (10%)</span>
-            <span><span id='add-tax-price'></span>円</span>
+            <span><span id='add-tax-price'>¥0</span>円</span>
           </div>
           <div class="price-content">
             <span>販売利益</span>
-            <span><span id='profit'></span>円</span>
+            <span><span id='profit'>¥0</span>円</span>
           </div>
         </div>
       </div>
@@ -141,7 +141,7 @@
       <%# 出品ボタン %>
       <div class="sell-btn-contents">
         <%= f.submit "出品する", class:"sell-btn" %>
-        <%= link_to 'もどる', root_path, class:"back-btn" %>
+        <%= link_to 'もどる', root_path, class:"back-btn", style: "padding: 10px 20px; background-color: #f1f1f1; border-radius: 5px; text-decoration: none; color: #333;" %>
       </div>
 
     <% end %>
@@ -158,3 +158,17 @@
     <p class="inc">©︎Furima,Inc.</p>
   </footer>
 </div>
+
+<%= javascript_include_tag 'items' %>
+
+<script>
+  document.getElementById("item-price").addEventListener("input", function() {
+    let price = parseInt(this.value);
+    if (!isNaN(price)) {
+      let saleFee = Math.floor(price * 0.1);
+      let profit = price - saleFee;
+      document.getElementById("add-tax-price").innerText = `¥${saleFee}`;
+      document.getElementById("profit").innerText = `¥${profit}`;
+    }
+  });
+</script>
