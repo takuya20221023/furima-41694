@@ -25,7 +25,7 @@ RSpec.describe Item, type: :model do
       it '価格がないと保存できないこと' do
         @item.price = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price can't be blank", )
+        expect(@item.errors.full_messages).to include("Price can't be blank")
       end
 
       it '価格が300円未満だと保存できないこと' do
@@ -81,6 +81,13 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("User must exist")
       end
+
+      it '画像が空の場合保存できないこと' do
+        @item.image = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Image can't be blank")
+      end
+
     end
 
     context '正常系' do
