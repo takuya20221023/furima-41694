@@ -13,27 +13,16 @@ class Item < ApplicationRecord
   # バリデーション
   validates :name, presence: { message: 'は必須です' }
   validates :description, presence: { message: 'は必須です' }
-  validates :price, presence: true, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'は300以上9999999以下で入力してください' }
-  validates :condition_id, presence: { message: 'は必須です' }
-  validates :category_id, presence: { message: 'は必須です' }
-  validates :shipping_fee_id, presence: { message: 'は必須です' }
-  validates :prefecture_id, presence: { message: 'は必須です' }
-  validates :shipping_day_id, presence: { message: 'は必須です' }
+  validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'は300以上9999999以下の整数で入力してください' }
+  
+  # ActiveHashのバリデーション（'---'が選択されないようにする）
+  validates :condition_id, numericality: { other_than: 1, message: 'を選択してください' }
+  validates :category_id, numericality: { other_than: 1, message: 'を選択してください' }
+  validates :shipping_fee_id, numericality: { other_than: 1, message: 'を選択してください' }
+  validates :prefecture_id, numericality: { other_than: 1, message: 'を選択してください' }
+  validates :shipping_day_id, numericality: { other_than: 1, message: 'を選択してください' }
 
   # 商品画像
   has_one_attached :image
   validates :image, presence: true
-
-  # 販売手数料の計算
-  def sale_fee
-    return 0 if price.nil? || price <= 0
-    (price * 0.1).floor
-  end
-
-  # 販売利益の計算
-  def profit
-    return 0 if price.nil? || price <= 0
-    (price - sale_fee).floor
-  end
 end
-

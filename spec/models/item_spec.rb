@@ -5,40 +5,79 @@ RSpec.describe Item, type: :model do
 
   # バリデーションテスト
   context 'バリデーションのテスト' do
-    it '商品名がないと保存できないこと' do
-      item = FactoryBot.build(:item, user: user, name: nil)  # nameをnilに設定
-      expect(item).not_to be_valid
+    before do
+      # バリデーションテスト用のインスタンスをFactoryBotで生成
+      @item = FactoryBot.build(:item, user: user)
     end
 
-    it '商品説明がないと保存できないこと' do
-      item = FactoryBot.build(:item, user: user, description: nil)  # descriptionをnilに設定
-      expect(item).not_to be_valid
+    context '異常系' do
+      it '商品名がないと保存できないこと' do
+        @item.name = nil
+        expect(@item).not_to be_valid
+      end
+
+      it '商品説明がないと保存できないこと' do
+        @item.description = nil
+        expect(@item).not_to be_valid
+      end
+
+      it '価格がないと保存できないこと' do
+        @item.price = nil
+        expect(@item).not_to be_valid
+      end
+
+      it '価格が300円未満だと保存できないこと' do
+        @item.price = 200
+        expect(@item).not_to be_valid
+      end
+
+      it '価格が9999999円以上だと保存できないこと' do
+        @item.price = 10_000_000
+        expect(@item).not_to be_valid
+      end
+
+      it '価格が半角数字以外だと保存できないこと' do
+        @item.price = 'abc'
+        expect(@item).not_to be_valid
+      end
+
+      it 'category_idが-1だと保存できないこと' do
+        @item.category_id = -1
+        expect(@item).not_to be_valid
+      end
+
+      it 'condition_idが-1だと保存できないこと' do
+        @item.condition_id = -1
+        expect(@item).not_to be_valid
+      end
+
+      it 'shipping_fee_idが-1だと保存できないこと' do
+        @item.shipping_fee_id = -1
+        expect(@item).not_to be_valid
+      end
+
+      it 'prefecture_idが-1だと保存できないこと' do
+        @item.prefecture_id = -1
+        expect(@item).not_to be_valid
+      end
+
+      it 'shipping_day_idが-1だと保存できないこと' do
+        @item.shipping_day_id = -1
+        expect(@item).not_to be_valid
+      end
     end
 
-    it '価格がないと保存できないこと' do
-      item = FactoryBot.build(:item, user: user, price: nil)  # priceをnilに設定
-      expect(item).not_to be_valid
-    end
+    context '正常系' do
+      it '全ての条件が整っていると保存できること' do
+        @item.price = 1000
+        @item.category_id = 1
+        @item.condition_id = 1
+        @item.shipping_fee_id = 1
+        @item.prefecture_id = 1
+        @item.shipping_day_id = 1
 
-    it '価格が300円未満だと保存できないこと' do
-      item = FactoryBot.build(:item, user: user, price: 200)  # priceを200に設定
-      expect(item).not_to be_valid
-    end
-
-    it '価格が9999999円以上だと保存できないこと' do
-      item = FactoryBot.build(:item, user: user, price: 10_000_000)  # priceを10000000に設定
-      expect(item).not_to be_valid
-    end
-
-    it '価格が半角数字以外だと保存できないこと' do
-      item = FactoryBot.build(:item, user: user, price: 'abc')  # priceを文字列に設定
-      expect(item).not_to be_valid
-    end
-
-    it '全ての条件が整っていると保存できること' do
-      item = FactoryBot.build(:item, user: user, price: 1000, category_id: 1,
-                               condition_id: 1, shipping_fee_id: 1, prefecture_id: 1, shipping_day_id: 1)
-      expect(item).to be_valid
+        expect(@item).to be_valid
+      end
     end
   end
 

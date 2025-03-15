@@ -8,17 +8,10 @@
 
     <%= form_with model: @item, url: items_path, method: :post, local: true do |f| %>
 
-      <% if @item.errors.any? %>
-        <div class="error-messages" style="color: red; background-color: #ffcccc; padding: 10px;">
-          <h2><%= pluralize(@item.errors.count, "エラー") %>が発生しました。</h2>
-          <ul>
-            <% @item.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
+    <%# インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
+    <%= render 'shared/error_messages', model: f.object %>
+    <%# //インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
+    
       <%# 商品画像 %>
       <div class="img-upload">
         <div class="weight-bold-text">
@@ -141,7 +134,7 @@
       <%# 出品ボタン %>
       <div class="sell-btn-contents">
         <%= f.submit "出品する", class:"sell-btn" %>
-        <%= link_to 'もどる', root_path, class:"back-btn", style: "padding: 10px 20px; background-color: #f1f1f1; border-radius: 5px; text-decoration: none; color: #333;" %>
+        <%=link_to 'もどる', root_path, class:"back-btn" %>
       </div>
 
     <% end %>
@@ -159,16 +152,3 @@
   </footer>
 </div>
 
-<%= javascript_include_tag 'items' %>
-
-<script>
-  document.getElementById("item-price").addEventListener("input", function() {
-    let price = parseInt(this.value);
-    if (!isNaN(price)) {
-      let saleFee = Math.floor(price * 0.1);
-      let profit = price - saleFee;
-      document.getElementById("add-tax-price").innerText = `¥${saleFee}`;
-      document.getElementById("profit").innerText = `¥${profit}`;
-    }
-  });
-</script>
