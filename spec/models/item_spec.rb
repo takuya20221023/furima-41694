@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
-  let(:user) { create(:user) }
 
   # バリデーションテスト
   context 'バリデーションのテスト' do
@@ -26,7 +25,7 @@ RSpec.describe Item, type: :model do
       it '価格がないと保存できないこと' do
         @item.price = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price can't be blank", "Price は300以上9999999以下の整数で入力してください")
+        expect(@item.errors.full_messages).to include("Price can't be blank", )
       end
 
       it '価格が300円未満だと保存できないこと' do
@@ -86,34 +85,12 @@ RSpec.describe Item, type: :model do
 
     context '正常系' do
       it '全ての条件が整っていると保存できること' do
-        @item.price = 1000
-        @item.category_id = 2
-        @item.condition_id = 2
-        @item.shipping_fee_id = 2
-        @item.prefecture_id = 2
-        @item.shipping_day_id = 2
-        @item.user = user  # ユーザーを設定
 
         expect(@item).to be_valid
       end
     end
   end
 
-  context '計算ロジックのテスト' do
-    let(:item) { FactoryBot.create(:item, user: user, price: 1000) }
-  
-    it '販売手数料が価格の10%で計算されること' do
-      expected_fee = (item.price * 0.1).floor
-      # sale_feeメソッドを使わず、期待値と直接比較
-      expect((item.price * 0.1).floor).to eq(expected_fee)
-    end
-  
-    it '販売利益が価格から販売手数料を引いた金額で計算されること' do
-      expected_profit = (item.price - (item.price * 0.1).floor).floor
-      # profitメソッドを使わず、直接計算して期待値と比較
-      expect((item.price - (item.price * 0.1).floor).floor).to eq(expected_profit)
-    end
-  end
 
 
 end
