@@ -13,57 +13,68 @@ RSpec.describe Item, type: :model do
     context '異常系' do
       it '商品名がないと保存できないこと' do
         @item.name = nil
-        expect(@item).not_to be_valid
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Name can't be blank")
       end
 
       it '商品説明がないと保存できないこと' do
         @item.description = nil
-        expect(@item).not_to be_valid
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Description can't be blank")
       end
 
       it '価格がないと保存できないこと' do
         @item.price = nil
-        expect(@item).not_to be_valid
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price can't be blank")
       end
 
       it '価格が300円未満だと保存できないこと' do
         @item.price = 200
-        expect(@item).not_to be_valid
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price は300以上9999999以下で入力してください")
       end
 
       it '価格が9999999円以上だと保存できないこと' do
         @item.price = 10_000_000
-        expect(@item).not_to be_valid
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price は300以上9999999以下で入力してください")
       end
 
       it '価格が半角数字以外だと保存できないこと' do
         @item.price = 'abc'
-        expect(@item).not_to be_valid
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number")
       end
 
       it 'category_idが-1だと保存できないこと' do
         @item.category_id = -1
-        expect(@item).not_to be_valid
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Category は必須です")
       end
 
       it 'condition_idが-1だと保存できないこと' do
         @item.condition_id = -1
-        expect(@item).not_to be_valid
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Condition は必須です")
       end
 
       it 'shipping_fee_idが-1だと保存できないこと' do
         @item.shipping_fee_id = -1
-        expect(@item).not_to be_valid
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Shipping fee は必須です")
       end
 
       it 'prefecture_idが-1だと保存できないこと' do
         @item.prefecture_id = -1
-        expect(@item).not_to be_valid
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Prefecture は必須です")
       end
 
       it 'shipping_day_idが-1だと保存できないこと' do
         @item.shipping_day_id = -1
-        expect(@item).not_to be_valid
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Shipping day は必須です")
       end
     end
 
