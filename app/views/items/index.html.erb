@@ -133,18 +133,12 @@
       <% if @items.present? %>
         <% @items.order(created_at: :desc).each do |item| %>        
           <li class='list'>
-            <%= link_to item_path(item) do %>
+            <%= link_to `#` do %>
               <div class='item-img-content'>
                 <%# ① 商品画像 %>
                 <%= image_tag item.image, class: "item-img" %>
 
                 <%# ② 「Sold Out」表示 (購入データがある場合) %>
-                <% if item.order.present? %>
-                  <div class='sold-out'>
-                    <span>Sold Out!!</span>
-                  </div>
-                <% end %>
-              </div>
               <%# ③ 商品名 %>
               <div class='item-info'>
                 <h3 class='item-name'>
@@ -153,6 +147,14 @@
                 <%# ④ 商品の値段 %>
                 <div class='item-price'>
                   <span>¥<%= item.price %><br>
+                    <%= item.shipping_fee.name %>
+                  </span>
+                  <div class='star-btn'>
+                    <%= image_tag "star.png", class:"star-icon" %>
+                      <span class='star-count'>0</span>
+                  </div>
+                </div>
+
                     <%# ⑤ 商品の配送料負担 %>
                     <%= item.shipping_fee_id == 2 ? "送料込み(出品者負担)" : "着払い(購入者負担)" %>
                   </span>
