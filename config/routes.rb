@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   resources :items, only: [:new, :create, :index]
 
   # 必要に応じて詳細、編集、削除などのアクションを追加
-  # resources :items, only: [:new, :create, :show, :edit, :update, :destroy]
+   resources :items, only: [:new, :create, :show, :edit, :update, :destroy]
 
 end

@@ -1,4 +1,4 @@
-class Item < ApplicationRecord 
+class Item < ApplicationRecord
   # ActiveHash associations
   extend ActiveHash::Associations::ActiveRecordExtensions
 
@@ -13,8 +13,12 @@ class Item < ApplicationRecord
   # バリデーション
   validates :name, presence: { message: 'は必須です' }
   validates :description, presence: { message: 'は必須です' }
-  validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'は300以上9999999以下の整数で入力してください' }
-  
+  validates :price, presence: true,
+                    numericality: { only_integer: true,
+                                    greater_than_or_equal_to: 300,
+                                    less_than_or_equal_to: 9_999_999,
+                                    message: 'は300以上9999999以下の整数で入力してください' }
+
   # ActiveHashのバリデーション（'---'が選択されないようにする）
   validates :condition_id, numericality: { other_than: 1, message: 'を選択してください' }
   validates :category_id, numericality: { other_than: 1, message: 'を選択してください' }
@@ -25,4 +29,6 @@ class Item < ApplicationRecord
   # 商品画像
   has_one_attached :image
   validates :image, presence: true
+
+  has_one :order
 end

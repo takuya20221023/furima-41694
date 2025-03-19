@@ -131,7 +131,7 @@
 
       <%# 商品がある場合、each メソッドで全商品を表示 %>
       <% if @items.present? %>
-        <% @items.each do |item| %>
+        <% @items.order(created_at: :desc).each do |item| %>        
           <li class='list'>
             <%= link_to item_path(item) do %>
               <div class='item-img-content'>
@@ -139,7 +139,7 @@
                 <%= image_tag item.image, class: "item-img" %>
 
                 <%# ② 「Sold Out」表示 (購入データがある場合) %>
-                <% if item.purchase.present? %>
+                <% if item.order.present? %>
                   <div class='sold-out'>
                     <span>Sold Out!!</span>
                   </div>

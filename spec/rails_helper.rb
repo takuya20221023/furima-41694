@@ -1,5 +1,5 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'  # spec_helperを最初に読み込む
+require 'spec_helper' # spec_helperを最初に読み込む
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 
@@ -59,5 +59,4 @@ RSpec.configure do |config|
 
   # FactoryBotを使いやすくするための設定
   config.include FactoryBot::Syntax::Methods
-
 end
