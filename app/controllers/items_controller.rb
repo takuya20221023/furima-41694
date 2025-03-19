@@ -1,13 +1,13 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]  # 追加
-  
+  before_action :authenticate_user!, only: [:new, :create] # 追加
+
   def new
     @item = Item.new
   end
 
   def index
+    @items = Item.order(created_at: :desc)
   end
-
 
   def create
     @item = current_user.items.build(item_params)
@@ -22,6 +22,7 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :description, :category_id, :condition_id, :shipping_fee_id, :prefecture_id, :shipping_day_id, :price, :image)
+    params.require(:item).permit(:name, :description, :category_id, :condition_id, :shipping_fee_id, :prefecture_id,
+                                 :shipping_day_id, :price, :image)
   end
 end
