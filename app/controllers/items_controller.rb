@@ -1,8 +1,9 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create] # 追加
+  before_action :authenticate_user!, only: [:new, :create]
 
   def new
     @item = Item.new
+    @order = Order.new
   end
 
   def index
@@ -16,6 +17,13 @@ class ItemsController < ApplicationController
     else
       flash.now[:alert] = '商品の出品に失敗しました。入力内容を確認してください。'
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def show
+    @item = Item.find_by(id: params[:id])  # find_by を使うと nil を返すのでエラーを防げる
+    unless @item
+      redirect_to root_path, alert: "商品が見つかりません"
     end
   end
 
