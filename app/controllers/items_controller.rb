@@ -3,7 +3,6 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
-    @order = Order.new
   end
 
   def index
@@ -22,9 +21,6 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find_by(id: params[:id])  # find_by を使うと nil を返すのでエラーを防げる
-    unless @item
-      redirect_to root_path, alert: "商品が見つかりません"
-    end
   end
 
   private

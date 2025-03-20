@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   # 必要に応じて詳細、編集、削除などのアクションを追加
    resources :items
 
-   resources :orders
+   #resources :orders
 end
