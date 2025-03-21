@@ -31,4 +31,10 @@ class Item < ApplicationRecord
   validates :image, presence: true
 
   #has_one :order
+
+  # 売却済みかどうかを判定するメソッド
+    #def sold_out?
+      #self.order.present? # 注文が存在する場合、売却済み
+    #end
+
 end
