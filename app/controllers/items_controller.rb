@@ -20,7 +20,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find_by(id: params[:id])  # find_by を使うと nil を返すのでエラーを防げる
+    @item = Item.find(params[:id])  # find_by を使うと nil を返すのでエラーを防げる
   end
 
   private
