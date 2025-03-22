@@ -46,17 +46,11 @@ class ItemsController < ApplicationController
                                  :shipping_day_id, :price, :image)
   end
 
-  # @item をセット
   def set_item
     @item = Item.find(params[:id])
-    return unless @item.user != current_user
-
-    redirect_to root_path
   end
-
+  
   def redirect_unless_owner
-    return unless @item.user_id != current_user.id
-
-    redirect_to root_path
+    redirect_to root_path unless @item.user_id == current_user.id
   end
 end

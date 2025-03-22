@@ -133,11 +133,6 @@
           <%= link_to item_path(item), class: 'list' do %> <%# ← 修正: <li>を直接囲む %>
             <div class='item-img-content'>
               <%# ① 商品画像 %>
-              <% if item.image.attached? %>
-                <%= image_tag item.image, class: "item-img" %>
-              <% else %>
-                <%= image_tag "item-sample.png", class: "item-img" %>
-              <% end %>    
               <div class='item-info'>
                 <%# ③ 商品名 %>
                 <h3 class='item-name'>
