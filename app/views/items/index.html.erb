@@ -130,11 +130,9 @@
     <ul class='item-lists'>
       <% if @items.present? %>
         <% @items.order(created_at: :desc).each do |item| %>        
-          <%= link_to item_path(item), class: 'list' do %> 
+          <%= link_to item_path(item), class: 'list' do %> <%# ← 修正: <li>を直接囲む %>
             <div class='item-img-content'>
               <%# ① 商品画像 %>
-              <%= image_tag item.image, class: "item-img" %>
-    
               <div class='item-info'>
                 <%# ③ 商品名 %>
                 <h3 class='item-name'>
