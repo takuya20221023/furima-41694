@@ -28,13 +28,17 @@ class Item < ApplicationRecord
 
   # 商品画像
   has_one_attached :image
-  validates :image, presence: true
-
-  #has_one :order
+  validates :image, presence: true, if: :image_blank?
 
   # 売却済みかどうかを判定するメソッド
-    #def sold_out?
-      #self.order.present? # 注文が存在する場合、売却済み
-    #end
+  # def sold_out?
+  #   self.order.present? # 注文が存在する場合、売却済み
+  # end
 
+  private
+
+  # 画像が添付されていない場合にtrueを返すメソッド
+  def image_blank?
+    !image.attached? && persisted? # 更新時で画像が添付されていない場合
+  end
 end
