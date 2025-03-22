@@ -24,18 +24,14 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    return if user_signed_in?
-
-    redirect_to action: :index
   end
 
   def update
-    params[:item][:image] = @item.image if params[:item][:image].blank?
 
     if @item.update(item_params)
-      redirect_to item_path(@item), notice: '商品情報を更新しました'
+      redirect_to item_path(@item)
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

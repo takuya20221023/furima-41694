@@ -28,7 +28,7 @@ class Item < ApplicationRecord
 
   # 商品画像
   has_one_attached :image
-  validates :image, presence: true, if: :image_blank?
+  validates :image, presence: true
 
   # 売却済みかどうかを判定するメソッド
   # def sold_out?
@@ -37,8 +37,4 @@ class Item < ApplicationRecord
 
   private
 
-  # 画像が添付されていない場合にtrueを返すメソッド
-  def image_blank?
-    !image.attached? && persisted? # 更新時で画像が添付されていない場合
-  end
 end
