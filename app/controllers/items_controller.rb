@@ -47,7 +47,7 @@ class ItemsController < ApplicationController
   end
 
   def set_item
-    @item = Item.find_by(id: params[:id])
+    @item = Item.find(params[:id])
     redirect_to root_path if @item.nil?
   end
 
