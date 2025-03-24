@@ -34,7 +34,4 @@ class Item < ApplicationRecord
   # def sold_out?
   #   self.order.present? # 注文が存在する場合、売却済み
   # end
-
-  private
-
 end
