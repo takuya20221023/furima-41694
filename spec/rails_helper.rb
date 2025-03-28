@@ -1,20 +1,15 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper' # spec_helperを最初に読み込む
+require 'rails_helper' # rails_helper を最初に読み込む
+
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 
-# Uncomment the line below in case you have `--require rails_helper` in the `.rspec` file
-# that will avoid rails generators crashing because migrations haven't been run yet
-# return unless Rails.env.test?
 require 'rspec/rails'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
-# Checks for pending migrations and applies them before tests are run.
-# If you are not using ActiveRecord, you can remove these lines.
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
@@ -27,12 +22,9 @@ RSpec.configure do |config|
     Rails.root.join('spec/fixtures')
   ]
 
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
   config.use_transactional_fixtures = true
 
-  # You can uncomment this line to turn off ActiveRecord support entirely.
+  # Uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 
   # RSpec Rails uses metadata to mix in different behaviours to your tests,
@@ -42,13 +34,6 @@ RSpec.configure do |config|
   #       # ...
   #     end
   #
-  # The different available types are documented in the features, such as in
-  # https://rspec.info/features/7-1/rspec-rails
-  #
-  # You can also infer these behaviours automatically by location, e.g.
-  # /spec/models would pull in the same behaviour as `type: :model` but this
-  # behaviour is considered legacy and will be removed in a future version.
-  #
   # To enable this behaviour uncomment the line below.
   # config.infer_spec_type_from_file_location!
 
@@ -57,6 +42,10 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  # FactoryBotを使いやすくするための設定
+  # FactoryBot を使いやすくするための設定
+  config.before(:each) do
+    Faker::UniqueGenerator.clear # Faker のユニークキャッシュをクリア
+  end
+
   config.include FactoryBot::Syntax::Methods
 end

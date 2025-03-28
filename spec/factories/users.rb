@@ -2,7 +2,7 @@ require 'faker'
 
 FactoryBot.define do
   factory :user do
-    email { Faker::Internet.unique.email }
+    sequence(:email) { |n| "test#{n}@example.com" } # 修正: ユニークなメールを確実に生成
     password { 'password123' }
     password_confirmation { 'password123' }
     nickname { 'testuser' }
