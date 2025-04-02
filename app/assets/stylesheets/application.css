@@ -13,21 +13,3 @@
  *= require_tree .
  *= require_self
  */
-
- /* 購入ページのセンタリング */
-.centered-container {
-  display: flex;
-  justify-content: center; /* 横方向に中央揃え */
-  align-items: center; /* 縦方向に中央揃え */
-  height: 100vh; /* ビューポートの高さに合わせて中央揃え */
-}
-
-.centered-content {
-  width: 100%; /* 幅を100%に設定 */
-  max-width: 600px; /* 最大幅を600pxに設定（好みに応じて変更） */
-  padding: 20px; /* 内側の余白 */
-  box-sizing: border-box; /* paddingを含めてサイズを計算 */
-  background-color: #fff; /* 背景色 */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 影を追加して浮いているように見せる */
-  border-radius: 8px; /* 角を丸くする（任意） */
-}

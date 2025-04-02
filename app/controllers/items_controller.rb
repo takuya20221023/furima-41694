@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :redirect_unless_owner, only: [:edit, :update, :destroy]
 
+
   def new
     @item = Item.new
   end
@@ -53,6 +54,9 @@ class ItemsController < ApplicationController
   end
 
   def redirect_unless_owner
-    redirect_to root_path unless @item.user_id == current_user.id
+    # 出品者でない、売却済み、または購入履歴がある場合、トップページへリダイレクト
+    if current_user != @item.user || @item.sold_out? || @item.orders.exists?(user_id: current_user.id)
+      redirect_to root_path, alert: "編集権限がありません"
+    end
   end
 end

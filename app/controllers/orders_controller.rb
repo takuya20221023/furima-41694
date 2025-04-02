@@ -1,39 +1,49 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_item
+  before_action :redirect_if_invalid_access
 
   def index
-    @item = Item.find(params[:item_id]) # item_idをパラメータから取得して、@itemを設定
-    @order_form = OrderForm.new
-  rescue ActiveRecord::RecordNotFound
-    # 商品が見つからない場合の処理
-    redirect_to root_path, alert: '商品が見つかりませんでした。'
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    @order_address = OrderAddress.new
   end
-    
+
   def create
-    @order_form = OrderForm.new(order_params)
-    if @order_form.valid?
+    @order_address = OrderAddress.new(order_params)
+    if @order_address.valid?
       pay_item
-      @order_form.save
+      @order_address.save
       redirect_to root_path
     else
-      render :index
+      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+      render :index, status: :unprocessable_entity
     end
   end
 
   private
 
   def order_params
-    params.require(:order_form).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number, :token)
-          .merge(user_id: current_user.id, item_id: params[:item_id], price: params[:price])
+    params.require(:order_address).permit(:postal_code, :prefecture_id, :city, :house_number, :building_name, :phone_number)
+          .merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
   end
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
-      amount: order_params[:price],
+      amount: @item.price,
       card: order_params[:token],
       currency: 'jpy'
     )
   end
 
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
 
+  def redirect_if_invalid_access
+    if @item.order.present? || current_user == @item.user
+      redirect_to root_path
+    end
+  end
 end
+

@@ -6,31 +6,26 @@
       購入内容の確認
     </h1>
 
-    <% if @order_form && @order_form.errors.any? %>
-      <div class="error_messages">
-        <% @order_form.errors.full_messages.each do |message| %>
-          <p><%= message %></p>
-        <% end %>
-      </div>
-    <% end %>
 
     <%# 購入内容の表示 %>
-    <% if @item %> 
-      <div class='buy-item-info'>
-        <%= image_tag @item.image, size: "300x300", class: 'buy-item-img' if @item.image.attached? %>
-        <div class='buy-item-right-content'>
-          <h2 class='buy-item-text'>
-            <%= @item.name %>
-          </h2>
-          <div class='buy-item-price'>
-            <p class='item-price-text'>¥<%= @item.price %></p>
-            <p class='item-price-sub-text'><%= @item.shipping_fee_id %></p>
-          </div>
+    <div class='buy-item-info'>
+      <% if @item.image.attached? %>
+        <%= image_tag @item.image, class: 'buy-item-img' %>
+      <% else %>
+        <%= image_tag "item-sample.png", class: 'buy-item-img' %>
+      <% end %>
+      <div class='buy-item-right-content'>
+        <h2 class='buy-item-text'>
+          <%= @item.name %>  <!-- 商品名を表示 -->
+        </h2>
+        <div class='buy-item-price'>
+          <p class='item-price-text'>¥<%= @item.price %> </p>  <!-- 商品価格を表示 -->
+          <p class='item-price-sub-text'>
+            <%= @item.shipping_fee_id == 1 ? '送料込み' : '配送料負担' %>  <!-- 送料の情報を表示 -->
+          </p>
         </div>
       </div>
-    <% else %>
-      <p>商品情報がありません。</p>
-    <% end %>
+    </div>
     <%# /購入内容の表示 %>
 
     <%# 支払額の表示 %>
@@ -38,29 +33,17 @@
       <h1 class='item-payment-title'>
         支払金額
       </h1>
-      <% if @item %>
-        <p class='item-payment-price'>
-          ¥<%= @item.price %>
-        </p>
-      <% else %>
-        <p>支払金額が表示されていません。</p>
-      <% end %>
+      <p class='item-payment-price'>
+        ¥<%= @item.price %>  <!-- 商品価格を表示 -->
+      </p>
     </div>
     <%# /支払額の表示 %>
+    <%= include_gon %>
 
-    <% if flash.now[:alert] %>
-      <div class="error-messages">
-        <ul>
-          <% flash.now[:alert].each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
 
-    <%= form_with model: @order_address, url: item_orders_path(@item), local: true do |f| %>
-      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      <%# クレジットカード情報入力 %>
+    <%= form_with model: @order_address, url: item_orders_path(@item), id: 'charge-form', class: 'transaction-form-wrap', local: true do |f| %>
+      <%= render 'orders/error_messages', model: @order_address if @order_address.present? %>
+      <%# カード情報の入力 %>
       <div class='credit-card-form'>
         <h1 class='info-input-haedline'>
           クレジットカード情報入力
@@ -72,10 +55,10 @@
           </div>
           <div id="number-form" class="input-default"></div>
           <div class='available-card'>
-            <%= image_tag 'card-visa.gif', class: 'card-logo' %>
-            <%= image_tag 'card-mastercard.gif', class: 'card-logo' %>
-            <%= image_tag 'card-jcb.gif', class: 'card-logo' %>
-            <%= image_tag 'card-amex.gif', class: 'card-logo' %>
+            <%= image_tag 'card-visa.gif', class: 'card-logo'%>
+            <%= image_tag 'card-mastercard.gif', class: 'card-logo'%>
+            <%= image_tag 'card-jcb.gif', class: 'card-logo'%>
+            <%= image_tag 'card-amex.gif', class: 'card-logo'%>
           </div>
         </div>
         <div class="form-group">
@@ -83,7 +66,9 @@
             <label class="form-text">有効期限</label>
             <span class="indispensable">必須</span>
           </div>
-          <div id="expiry-form" class="input-default"></div>
+          <div class='input-expiration-date-wrap'>
+            <div id="expiry-form" class="input-default"></div>
+          </div>
         </div>
         <div class="form-group">
           <div class='form-text-wrap'>
@@ -93,11 +78,8 @@
           <div id="cvc-form" class="input-default"></div>
         </div>
       </div>
-      <%# /クレジットカード情報入力 %>
-
-      <%# トークン用の hidden_field %>
-      <%= f.hidden_field :token, id: 'card-token' %>
-
+      <%# /カード情報の入力 %>
+      
       <%# 配送先の入力 %>
       <div class='shipping-address-form'>
         <h1 class='info-input-haedline'>
@@ -147,9 +129,9 @@
         </div>
       </div>
       <%# /配送先の入力 %>
-      
+
       <div class='buy-btn'>
-        <%= f.submit "購入", class:"buy-red-btn", id:"submit-button" %>
+        <%= f.submit "購入" ,class:"buy-red-btn", id:"button" %>
       </div>
     <% end %>
   </div>
