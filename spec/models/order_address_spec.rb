@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe OrderAddress, type: :model do
   before do
-    @user = FactoryBot.create(:user)  # ユーザーのインスタンスを作成
-    @item = FactoryBot.create(:item, user: @user)  # アイテムをユーザーに関連付けて作成
-    @order_address = FactoryBot.build(:order_address, user_id: @user.id, item_id: @item.id)  # user_id と item_id を設定
+    @user = FactoryBot.create(:user) # ユーザーのインスタンスを作成
+    @item = FactoryBot.create(:item, user: @user) # アイテムをユーザーに関連付けて作成
+    @order_address = FactoryBot.build(:order_address, user_id: @user.id, item_id: @item.id) # user_id と item_id を設定
   end
 
   describe '商品購入' do
@@ -35,13 +35,13 @@ RSpec.describe OrderAddress, type: :model do
       it '郵便番号が「3桁-4桁」の半角でないと購入できない' do
         @order_address.postal_code = '1234567'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Postal code は「3桁-4桁」の形式で入力してください")
+        expect(@order_address.errors.full_messages).to include('Postal code は「3桁-4桁」の形式で入力してください')
       end
 
       it '都道府県が選択されていないと購入できない' do
         @order_address.prefecture_id = 1
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Prefecture を選択してください")
+        expect(@order_address.errors.full_messages).to include('Prefecture を選択してください')
       end
 
       it '市区町村が空では購入できない' do
@@ -65,19 +65,19 @@ RSpec.describe OrderAddress, type: :model do
       it '電話番号が9桁以下では購入できない' do
         @order_address.phone_number = '090123456'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Phone number は10桁以上11桁以内の半角数字で入力してください")
+        expect(@order_address.errors.full_messages).to include('Phone number は10桁以上11桁以内の半角数字で入力してください')
       end
 
       it '電話番号が12桁以上では購入できない' do
         @order_address.phone_number = '090123456789'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Phone number は10桁以上11桁以内の半角数字で入力してください")
+        expect(@order_address.errors.full_messages).to include('Phone number は10桁以上11桁以内の半角数字で入力してください')
       end
 
       it '電話番号にハイフンが含まれていると購入できない' do
         @order_address.phone_number = '090-1234-5678'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Phone number は10桁以上11桁以内の半角数字で入力してください")
+        expect(@order_address.errors.full_messages).to include('Phone number は10桁以上11桁以内の半角数字で入力してください')
       end
     end
   end

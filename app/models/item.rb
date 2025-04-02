@@ -33,7 +33,7 @@ class Item < ApplicationRecord
   validates :image, presence: true
 
   # 売却済みかどうかを判定するメソッド
-   def sold_out?
+  def sold_out?
     orders.exists? # 現在の商品の注文が存在する場合、売却済みと判断
   end
 end
