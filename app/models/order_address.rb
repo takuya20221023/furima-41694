@@ -10,7 +10,7 @@ class OrderAddress
     validates :city
     validates :house_number
     validates :phone_number, format: { with: /\A\d{10,11}\z/, message: 'は10桁以上11桁以内の半角数字で入力してください' }
-    validates :token, presence: true
+    validates :token
   end
 
   def save

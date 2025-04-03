@@ -54,7 +54,7 @@ class ItemsController < ApplicationController
 
   def redirect_unless_owner
     # 出品者でない、売却済み、または購入履歴がある場合、トップページへリダイレクト
-    return unless current_user != @item.user || @item.sold_out? || @item.orders.exists?(user_id: current_user.id)
+    return unless current_user != @item.user || @item.sold_out? 
 
     redirect_to root_path, alert: '編集権限がありません'
   end

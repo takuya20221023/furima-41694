@@ -8,8 +8,5 @@ FactoryBot.define do
     phone_number    { '09012345678' }
     token           { 'tok_abcdefghijk00000000000000000' } # ダミーのトークン
 
-    # 外部キー（アソシエーションが必要なら定義）
-    association :user
-    association :item
   end
 end

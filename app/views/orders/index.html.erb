@@ -9,20 +9,14 @@
 
     <%# 購入内容の表示 %>
     <div class='buy-item-info'>
-      <% if @item.image.attached? %>
-        <%= image_tag @item.image, class: 'buy-item-img' %>
-      <% else %>
-        <%= image_tag "item-sample.png", class: 'buy-item-img' %>
-      <% end %>
+      <%= image_tag @item.image, class: 'buy-item-img' %>
       <div class='buy-item-right-content'>
         <h2 class='buy-item-text'>
           <%= @item.name %>  <!-- 商品名を表示 -->
         </h2>
         <div class='buy-item-price'>
           <p class='item-price-text'>¥<%= @item.price %> </p>  <!-- 商品価格を表示 -->
-          <p class='item-price-sub-text'>
-            <%= @item.shipping_fee_id == 1 ? '送料込み' : '配送料負担' %>  <!-- 送料の情報を表示 -->
-          </p>
+          <p class='item-price-sub-text'><%= @item.shipping_fee.name %></p>  <!-- 送料の情報を表示 -->
         </div>
       </div>
     </div>
@@ -42,7 +36,7 @@
 
 
     <%= form_with model: @order_address, url: item_orders_path(@item), id: 'charge-form', class: 'transaction-form-wrap', local: true do |f| %>
-      <%= render 'orders/error_messages', model: @order_address if @order_address.present? %>
+      <%= render 'orders/error_messages', model: @order_address %>
       <%# カード情報の入力 %>
       <div class='credit-card-form'>
         <h1 class='info-input-haedline'>
