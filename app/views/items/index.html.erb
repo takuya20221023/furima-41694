@@ -155,6 +155,13 @@
                     <span class='star-count'>0</span>
                   </div>
                 </div>
+
+                <%# 売却済みの場合に "Sold Out!!" を表示 %>
+                <% if item.sold_out? %>
+                  <div class="sold-out">
+                    <span>Sold Out!!</span>
+                  </div>
+                <% end %>
               </div>
             </div>
           <% end %> 

@@ -27,6 +27,8 @@ module Furima41694
     config.autoload_paths += %W(#{config.root}/app/models/concerns)
 
 
+    PAYJP_PUBLIC_KEY = ENV['PAYJP_PUBLIC_KEY']
+    PAYJP_SECRET_KEY = ENV['PAYJP_SECRET_KEY']
 
   end
 end

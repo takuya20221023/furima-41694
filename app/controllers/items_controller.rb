@@ -21,6 +21,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @item = Item.find(params[:id])
   end
 
   def edit
@@ -52,6 +53,9 @@ class ItemsController < ApplicationController
   end
 
   def redirect_unless_owner
-    redirect_to root_path unless @item.user_id == current_user.id
+    # 出品者でない、売却済み、または購入履歴がある場合、トップページへリダイレクト
+    return unless current_user != @item.user || @item.sold_out? 
+
+    redirect_to root_path, alert: '編集権限がありません'
   end
 end

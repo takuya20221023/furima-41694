@@ -9,6 +9,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :shipping_fee
   belongs_to_active_hash :prefecture
   belongs_to_active_hash :shipping_day
+  has_one :order
 
   # バリデーション
   validates :name, presence: { message: 'は必須です' }
@@ -31,7 +32,7 @@ class Item < ApplicationRecord
   validates :image, presence: true
 
   # 売却済みかどうかを判定するメソッド
-  # def sold_out?
-  #   self.order.present? # 注文が存在する場合、売却済み
-  # end
+  def sold_out?
+    orders.exists? # 現在の商品の注文が存在する場合、売却済みと判断
+  end
 end
