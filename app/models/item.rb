@@ -9,7 +9,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :shipping_fee
   belongs_to_active_hash :prefecture
   belongs_to_active_hash :shipping_day
-  has_one :order
+  has_many :orders
 
   # バリデーション
   validates :name, presence: { message: 'は必須です' }
