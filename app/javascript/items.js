@@ -14,7 +14,7 @@ const price = () => {
   const updatePrices = () => {
     const price = parseInt(priceInput.value, 10);
 
-    if (isNaN(price) || price < 300 || price > 9999999) { 
+    if (isNaN(price) || price < 0 || price > 9999999) { 
       // 価格が範囲外の場合は0を表示
       commissionElement.textContent = '0';
       profitElement.textContent = '0';
